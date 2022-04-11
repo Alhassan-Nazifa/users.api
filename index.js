@@ -1,5 +1,6 @@
 const express =require("express")
 const usersRoute =require("./routes/usersRoutes")
+const path = require("path")
 
 const app = express()
 
@@ -10,11 +11,17 @@ app.use(usersRoute)
 
 //home route
 app.get("/",(req, res)=>{
-    res.status(200).send("<h1>WELCOME TO THE USERS DATABASE</h1>");
+    res.sendFile(path.join(__dirname + "/pages/index.html"))
+
 
 })
 
-const PORT =4000
+app.get("/*", (req, res)=>{
+    res.status(400).sendFile(path.join(__dirname + "/pages/404.html"))
+
+})
+
+const PORT =4000;
 
 app.listen(PORT, ()=>{
     console.log("SERVER IS UP")
